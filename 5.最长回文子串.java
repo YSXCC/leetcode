@@ -8,6 +8,8 @@
 class Solution {
     public String longestPalindrome(String s) {
         //2、动态规划
+        if (s.equals(""))
+            return "";
         int length = s.length();
         String reverse = new StringBuffer(s).reverse().toString();
         int arr[][] = new int[length][length];
@@ -23,9 +25,16 @@ class Solution {
                         arr[i][j] = arr[i-1][j-1] + 1;
                     }
                 }
+                if(arr[i][j] > maxLen){
+                    int reversePosition = length - 1 - j;
+                    if(reversePosition + arr[i][j] -1 == i){
+                        maxLen = arr[i][j];
+                        maxEnd = i;
+                    }
+                }
             }
         }
-        return s.substring(maxEnd-length+1, maxEnd+1);
+        return s.substring(maxEnd-maxLen+1, maxEnd+1);
     }
 
     
